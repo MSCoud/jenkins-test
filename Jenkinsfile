@@ -55,6 +55,13 @@ node ("APPLI-ETIXO-04") {
       dockerImage = docker.build("sandbox/${docker_image_name}:v${version}", 'build/docker')
     }
 
+
+    stage('Archiving') {
+      sh "docker save -o ${docker_image_name}:v${version}.tar  sandbox/${docker_image_name}:v${version}"
+      archiveArtifacts artifacts: "${docker_image_name}:v${version}.tar", fingerprint: true
+      updateGitlabCommitStatus name: "${docker_image_name}:v${version}", state: 'success'
+    }
+
 //    def dockerImage
 //    stage('build docker') {
 //    }
