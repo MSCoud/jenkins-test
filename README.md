@@ -5,7 +5,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ## Jenkins CI
 
-Test deployment
+Test deployment amin
 
 
 ## Development server
