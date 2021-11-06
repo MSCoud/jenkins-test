@@ -35,10 +35,10 @@ node ("APPLI-ETIXO-04") {
         sh "npm install"
       }
 
-
-      stage('Test unitaire ') {
-        sh "ng test"
-      }
+//
+//      stage('Test unitaire ') {
+//        sh "ng test"
+//      }
 
       stage('Packaging ') {
         sh "rm -rf build/"
