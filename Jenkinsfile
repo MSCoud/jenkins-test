@@ -69,7 +69,6 @@ node ("APPLI-ETIXO-04") {
       updateGitlabCommitStatus name: "${docker_image_name}:v${version}", state: 'success'
     }
 
-
   stage('Deployment') {
 
     sshagent(['ci.etixway']) {
