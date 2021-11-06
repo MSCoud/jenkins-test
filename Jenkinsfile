@@ -57,10 +57,29 @@ node ("APPLI-ETIXO-04") {
 
 
     stage('Archiving') {
+      //      to be archived
       sh "docker save -o ${docker_image_name}:v${version}.tar  sandbox/${docker_image_name}:v${version}"
       archiveArtifacts artifacts: "${docker_image_name}:v${version}.tar", fingerprint: true
+
+      //      to be used for deployement en dev env
+      sh "docker tag ${docker_image_name}:v${version}  sandbox/${docker_image_name}:dev"
+      sh "docker save -o ${docker_image_name}:dev.tar  sandbox/${docker_image_name}:dev"
+
+
       updateGitlabCommitStatus name: "${docker_image_name}:v${version}", state: 'success'
     }
+
+
+  stage('Deployment') {
+
+    sshagent(['ci.etixway']) {
+      sh "scp -o StrictHostKeyChecking=no ${docker_image_name}:dev.tar  root@10.10.40.98:${docker_image_name}:dev.tar "
+      sh 'ssh -o StrictHostKeyChecking=no root@10.10.40.98 sudo docker-compose -f /docker-workspace/sandbox/jenkins-project/docker-compose.yml down'
+      sh "ssh -o StrictHostKeyChecking=no root@10.10.40.98 sudo docker image rm ${docker_image_name}:dev "
+      sh "ssh -o StrictHostKeyChecking=no root@10.10.40.98 sudo docker load -i ${docker_image_name}:dev.tar"
+      sh 'ssh -o StrictHostKeyChecking=no root@10.10.40.98 sudo docker-compose -f /docker-workspace/sandbox/jenkins-project/docker-compose.yml up -d'
+    }
+  }
 
 //    def dockerImage
 //    stage('build docker') {
