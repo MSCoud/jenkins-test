@@ -62,7 +62,7 @@ node ("APPLI-ETIXO-04") {
       archiveArtifacts artifacts: "${docker_image_name}:v${version}.tar", fingerprint: true
 
       //      to be used for deployement en dev env
-      sh "docker tag ${docker_image_name}:v${version}  sandbox/${docker_image_name}:dev"
+      sh "docker tag sandbox/${docker_image_name}:v${version}  sandbox/${docker_image_name}:dev"
       sh "docker save -o ${docker_image_name}:dev.tar  sandbox/${docker_image_name}:dev"
 
 
