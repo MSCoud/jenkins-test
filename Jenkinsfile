@@ -22,13 +22,18 @@ node {
 
     }
 
-//
-//
-//    docker.image('trion/ng-cli:12.2.12').inside {
-//
-//
-//    }
-//
+
+
+    docker.image('trion/ng-cli:12.2.12').inside {
+      stage('Check version NG-CLI') {
+        echo "afficher les version angular-cli"
+        sh "ng version"
+        sh "node --version"
+
+      }
+
+    }
+
 //    def dockerImage
 //    stage('build docker') {
 //    }
