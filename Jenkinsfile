@@ -74,10 +74,10 @@ node ("APPLI-ETIXO-04") {
 
     sshagent(['ci.etixway']) {
       sh "scp -o StrictHostKeyChecking=no ${docker_image_name}-dev.tar  root@10.10.40.98:${docker_image_name}-dev.tar "
-      sh 'ssh -o StrictHostKeyChecking=no root@10.10.40.98 sudo docker-compose -f /docker-workspace/sandbox/jenkins-project/docker-compose.yml down'
-      sh "ssh -o StrictHostKeyChecking=no root@10.10.40.98 sudo docker image rm ${docker_image_name}:dev "
-      sh "ssh -o StrictHostKeyChecking=no root@10.10.40.98 sudo docker load -i ${docker_image_name}-dev.tar"
-      sh 'ssh -o StrictHostKeyChecking=no root@10.10.40.98 sudo docker-compose -f /docker-workspace/sandbox/jenkins-project/docker-compose.yml up -d'
+      sh 'ssh -o StrictHostKeyChecking=no root@10.10.40.98 docker-compose -f /docker-workspace/sandbox/jenkins-project/docker-compose.yml down'
+      sh "ssh -o StrictHostKeyChecking=no root@10.10.40.98 docker image rm ${docker_image_name}:dev "
+      sh "ssh -o StrictHostKeyChecking=no root@10.10.40.98 docker load -i ${docker_image_name}-dev.tar"
+      sh 'ssh -o StrictHostKeyChecking=no root@10.10.40.98 docker-compose -f /docker-workspace/sandbox/jenkins-project/docker-compose.yml up -d'
     }
   }
 
