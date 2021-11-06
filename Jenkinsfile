@@ -4,7 +4,7 @@
 def docker_image_name = ''
 def version = ''
 
-node {
+node "APPLI-ETIXO-04" {
     stage('Checkout') {
         checkout scm
     }
