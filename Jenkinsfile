@@ -25,13 +25,34 @@ node ("APPLI-ETIXO-04") {
 
 
     docker.image('trion/ng-cli:12.2.12').inside {
-      stage('Check version NG-CLI') {
+      stage('Check ng-cli and node version ') {
         echo "afficher les version angular-cli"
         sh "ng version"
         sh "node --version"
-
       }
 
+      stage('Install Dependencies ') {
+        sh "npm install"
+      }
+
+
+      stage('Test unitaire ') {
+        sh "ng test"
+      }
+
+      stage('Packaging ') {
+        sh "rm -rf build/"
+        sh "ng build"
+      }
+
+    }
+
+    def dockerImage
+    stage('build docker') {
+      sh "mkdir build/"
+      sh "cp -R docker build/"
+      sh "cp -R dist build/docker/"
+      dockerImage = docker.build("sandbox/${docker_image_name}:v${version}", 'build/docker')
     }
 
 //    def dockerImage
