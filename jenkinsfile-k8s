@@ -4,10 +4,8 @@
 def docker_image_name = ''
 def version = ''
 
-pipeline {
-  agent {
-    kubernetes {
-      yaml '''
+podTemplate(
+      yaml: '''
         apiVersion: v1
         kind: Pod
         metadata:
@@ -34,13 +32,10 @@ pipeline {
             - name: docker-sock
               hostPath:
                 path: "/var/run/docker.sock"
-
         '''
-    }
-  }
-  stages {
-
-    stage('Checkout') {
+    ) {
+     node(POD_LABEL) {
+          stage('Checkout') {
             checkout scm
      }
 
@@ -98,5 +93,7 @@ pipeline {
 
           }
       }
+
+     }
   }
-}
+
