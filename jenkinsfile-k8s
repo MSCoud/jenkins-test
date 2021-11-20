@@ -36,6 +36,10 @@ podTemplate(
     ) {
      node(POD_LABEL) {
           stage('Checkout') {
+            script {
+              env.GIT_SSL_NO_VERIFY = 1
+            }
+
             checkout scm
      }
 
