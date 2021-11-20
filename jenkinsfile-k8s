@@ -77,14 +77,13 @@ podTemplate(
           }
       }
 
-        def dockerImage
       stage('Run docker') {
         container('docker') {
             stage('build docker') {
                   sh "mkdir build/"
                   sh "cp -R docker build/"
                   sh "cp -R dist build/docker/"
-                  dockerImage = docker.build("sandbox/${docker_image_name}:v${version}", 'build/docker')
+                  sh "docker.build(\"sandbox/${docker_image_name}:v${version}\", 'build/docker')"
             }
 
            stage('Archiving') {
