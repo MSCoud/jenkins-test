@@ -80,11 +80,4 @@ node ("APPLI-ETIXO-04") {
     }
   }
 
-//    def dockerImage
-//    stage('build docker') {
-//    }
-//
-//    stage('publish and Archiving') {
-//     }
-
 }
