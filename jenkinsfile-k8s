@@ -91,13 +91,16 @@ podTemplate(
                  sh "docker save -o ${docker_image_name}:v${version}.tar  sandbox/${docker_image_name}:v${version}"
            }
 
+
+          stage("Archiving"){
+            sh "cp ${docker_image_name}:v${version}.tar ${WORKSPACE}/${docker_image_name}:v${version}.tar"
+            archiveArtifacts allowEmptyArchive: true, artifacts: "${docker_image_name}:v${version}.tar", fingerprint: true
+          }
+
         }
       }
 
-       stage("Archiving"){
-         archiveArtifacts artifacts: "${docker_image_name}:v${version}.tar", fingerprint: true
-         updateGitlabCommitStatus name: "${docker_image_name}:v${version}", state: 'success'
-       }
+
 
      }
   }
